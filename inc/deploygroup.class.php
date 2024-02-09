@@ -183,7 +183,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             LEFT JOIN glpi_plugin_fusioninventory_tasks on plugin_fusioninventory_tasks_id=glpi_plugin_fusioninventory_tasks.id
             WHERE `actors` LIKE '%\"PluginFusioninventoryDeployGroup\":\"".$_GET['id']."\"%'
             ORDER BY glpi_plugin_fusioninventory_tasks.name";
-         $res = $DB->query($query);
+         $res = $DB->doQuery($query);
 
          while ($row = $DB->fetchAssoc($res)) {
             echo "<tr class='tab_bg_1'>";
@@ -595,7 +595,7 @@ class PluginFusioninventoryDeployGroup extends CommonDBTM {
             $query = "SELECT `fields_array`
                      FROM `glpi_plugin_fusioninventory_deploygroups_dynamicdatas`
                      WHERE `plugin_fusioninventory_deploygroups_id`='".$group->getID()."'";
-            $result = $DB->query($query);
+            $result = $DB->doQuery($query);
             if ($DB->numrows($result) > 0) {
                $fields_array     = $DB->result($result, 0, 'fields_array');
                $computers_params = unserialize($fields_array);

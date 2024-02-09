@@ -46,7 +46,7 @@ WHERE
   glpi_plugin_fusioninventory_configsecurities.id=glpi_plugin_fusinvsnmp_unmanageds.plugin_fusinvsnmp_configsecurities_id
 
 ";
-$result = $DB->query($sql);
+$result = $DB->doQuery($sql);
 while ($host=$DB->fetchArray($result)) {
 
    $filePath = sprintf("%s/%s-%s.walk", $outputDir, $host['ip'], preg_replace('/[^a-zA-Z0-9,_-]/', '_', $host['sysdescr']));

@@ -386,7 +386,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                      FROM glpi_plugin_fusioninventory_deploygroups_staticdatas
                      WHERE groups_id = '$items_id'
                      AND itemtype = 'Computer'";
-                     $res = $DB->query($query);
+                     $res = $DB->doQuery($query);
                      while ($row = $DB->fetchAssoc($res)) {
                         $computers[] = $row['items_id'];
                      }
@@ -397,7 +397,7 @@ class PluginFusioninventoryCollect extends CommonDBTM {
                      FROM glpi_plugin_fusioninventory_deploygroups_dynamicdatas
                      WHERE groups_id = '$items_id'
                      LIMIT 1";
-                     $res = $DB->query($query);
+                     $res = $DB->doQuery($query);
                      $row = $DB->fetchAssoc($res);
 
                      if (isset($_GET)) {

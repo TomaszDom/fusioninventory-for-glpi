@@ -429,7 +429,7 @@ class PluginFusioninventoryTaskjobView extends PluginFusioninventoryCommonView {
                              AND computers.is_deleted = 0
                              AND computers.is_template = 0
                           GROUP BY agents.`id`, agents.`computers_id`";
-         $res_filter = $DB->query($query_filter);
+         $res_filter = $DB->doQuery($query_filter);
          $filter_id = [];
          while ($data_filter = $DB->fetchAssoc($res_filter)) {
             if ($itemtype == 'Computer') {

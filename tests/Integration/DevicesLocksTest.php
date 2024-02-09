@@ -90,7 +90,7 @@ class DevicesLocksTest extends TestCase {
       }
 
       // Delete all locks
-      $DB->query('DELETE FROM glpi_plugin_fusioninventory_locks');
+      $DB->doQuery('DELETE FROM glpi_plugin_fusioninventory_locks');
 
    }
 
@@ -99,7 +99,7 @@ class DevicesLocksTest extends TestCase {
       global $DB;
 
       // Delete all locks
-      $DB->query('DELETE FROM glpi_plugin_fusioninventory_locks');
+      $DB->doQuery('DELETE FROM glpi_plugin_fusioninventory_locks');
    }
 
 
@@ -219,7 +219,7 @@ class DevicesLocksTest extends TestCase {
       }
       // Delete all locks
       $pfLock = new PluginFusioninventoryLock();
-      $DB->query('DELETE FROM glpi_plugin_fusioninventory_locks');
+      $DB->doQuery('DELETE FROM glpi_plugin_fusioninventory_locks');
 
       $a_computerinventory = [
          "Computer" => [
@@ -327,7 +327,7 @@ class DevicesLocksTest extends TestCase {
       }
       // Delete all locks
       $pfLock = new PluginFusioninventoryLock();
-      $DB->query('DELETE FROM glpi_plugin_fusioninventory_locks');
+      $DB->doQuery('DELETE FROM glpi_plugin_fusioninventory_locks');
 
       $input = [
           'tablename'   => 'glpi_networkequipments',
@@ -409,7 +409,7 @@ class DevicesLocksTest extends TestCase {
          $computer->delete(['id' => $item['id']], true);
       }
       // Delete all locks
-      $DB->query('DELETE FROM glpi_plugin_fusioninventory_locks');
+      $DB->doQuery('DELETE FROM glpi_plugin_fusioninventory_locks');
 
       $computer_xml =
       '<?xml version="1.0" encoding="UTF-8"?>

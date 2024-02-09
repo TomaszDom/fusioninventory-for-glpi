@@ -544,7 +544,7 @@ class PluginFusioninventoryInventoryComputerInventory {
          $query = str_replace("INSERT INTO", "INSERT IGNORE INTO", $query);
 
          $CFG_GLPI["use_log_in_files"] = false;
-         if (!$DB->query($query)) {
+         if (!$DB->doQuery($query)) {
             $communication = new PluginFusioninventoryCommunication();
             $communication->setMessage("<?xml version='1.0' encoding='UTF-8'?>
          <REPLY>

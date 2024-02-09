@@ -107,7 +107,7 @@ class PluginFusioninventoryCollect_Wmi_Content
                 WHERE `computers_id` = '".$computers_id."'
                   AND `plugin_fusioninventory_collects_wmis_id` =
                   '".$collects_wmis_id."'";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       while ($data = $DB->fetchAssoc($result)) {
          $wmi_id = $data['id'];
          unset($data['id']);

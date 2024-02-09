@@ -94,7 +94,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
                WHERE `plugin_fusioninventory_deploytasks_id` = '$tasks_id'
                AND method = 'deployinstall'";
 
-      $res  = $DB->query($sql);
+      $res  = $DB->doQuery($sql);
       $json  = [];
       $temp_tasks = [];
       while ($row = $DB->fetchAssoc($res)) {
@@ -265,7 +265,7 @@ class PluginFusioninventoryDeployTaskjob extends CommonDBTM {
                      $query .= " WHERE name LIKE '%$like'";
                   }
                   $query .= " ORDER BY name ASC";
-                  $query_res = $DB->query($query);
+                  $query_res = $DB->doQuery($query);
                   $i = 0;
                   while ($row = $DB->fetchArray($query_res)) {
                      $res['action_selections'][$i]['id'] = $row['id'];

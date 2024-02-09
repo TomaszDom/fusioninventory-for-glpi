@@ -467,7 +467,7 @@ class PluginFusioninventoryNetworkPortLog extends CommonDBTM {
       $text .= "<th>"._n('Date', 'Dates', 1)."</th>";
       $text .= "</tr>";
 
-      $result=$DB->query($query);
+      $result=$DB->doQuery($query);
       if ($result) {
          while ($data=$DB->fetchArray($result)) {
             $text .= "<tr class='tab_bg_1'>";

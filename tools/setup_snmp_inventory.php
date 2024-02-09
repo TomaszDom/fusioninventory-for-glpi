@@ -150,7 +150,7 @@ if ($params['comp_name'] == '') {
 
 $module = new PluginFusioninventoryAgentmodule();
 echo "Enabled modules netdiscovery & networkinventory by default\n";
-$DB->query("UPDATE `glpi_plugin_fusioninventory_agentmodules` SET `is_active`=1");
+$DB->doQuery("UPDATE `glpi_plugin_fusioninventory_agentmodules` SET `is_active`=1");
 
 $computer        = new Computer();
 $params_computer = ['name' => $params['comp_name'], 'entities_id' => 0];

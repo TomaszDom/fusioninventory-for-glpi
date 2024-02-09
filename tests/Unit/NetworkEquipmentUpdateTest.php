@@ -63,7 +63,7 @@ class NetworkEquipmentUpdateTest extends TestCase {
    public function AddNetworkEquipment() {
       global $DB;
 
-      $DB->query("UPDATE `glpi_plugin_fusioninventory_networkporttypes`"
+      $DB->doQuery("UPDATE `glpi_plugin_fusioninventory_networkporttypes`"
               ." SET `import`='1'"
               ." WHERE `number`='54'");
 
@@ -222,7 +222,7 @@ class NetworkEquipmentUpdateTest extends TestCase {
 
       $pfiNetworkEquipmentLib->updateNetworkEquipment($a_inventory, $this->items_id, 1);
 
-      $DB->query("UPDATE `glpi_plugin_fusioninventory_networkporttypes`"
+      $DB->doQuery("UPDATE `glpi_plugin_fusioninventory_networkporttypes`"
               ." SET `import`='0'"
               ." WHERE `number`='54'");
 

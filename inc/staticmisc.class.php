@@ -261,7 +261,7 @@ class PluginFusioninventoryStaticmisc {
                    ON `c`.`id` = `a`.`plugin_fusioninventory_credentials_id`
                 WHERE `c`.`itemtype`='PluginFusioninventoryInventoryComputerESX'";
       $query.= getEntitiesRestrictRequest(' AND', 'a');
-      $results = $DB->query($query);
+      $results = $DB->doQuery($query);
 
       $agents = [];
       //$agents['.1'] = __('All');
@@ -311,7 +311,7 @@ class PluginFusioninventoryStaticmisc {
                 WHERE `c`.`itemtype`='PluginFusioninventoryInventoryComputerESX'";
       $query.= getEntitiesRestrictRequest(' AND', 'glpi_plugin_fusioninventory_credentialips');
 
-      $results = $DB->query($query);
+      $results = $DB->doQuery($query);
       $credentialips = [];
       while ($data = $DB->fetchArray($results)) {
          $credentialips[$data['id']] = $data['name'];

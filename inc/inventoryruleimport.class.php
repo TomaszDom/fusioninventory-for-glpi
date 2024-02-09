@@ -867,7 +867,7 @@ class PluginFusioninventoryInventoryRuleImport extends Rule {
                "pluginFusioninventory-rules",
                $sql_glpi."\n"
             );
-            $result_glpi = $DB->query($sql_glpi);
+            $result_glpi = $DB->doQuery($sql_glpi);
 
             if ($result_glpi) {
                if ($DB->numrows($result_glpi) > 0) {

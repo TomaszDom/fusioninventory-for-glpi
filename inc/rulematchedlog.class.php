@@ -201,7 +201,7 @@ class PluginFusioninventoryRulematchedlog extends CommonDBTM {
                AND `itemtype` = '".$itemtype."'
             ORDER BY `date` DESC
             LIMIT 30, 50000";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       while ($data=$DB->fetchArray($result)) {
          $this->delete(['id'=>$data['id']]);
       }

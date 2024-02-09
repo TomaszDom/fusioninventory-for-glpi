@@ -689,7 +689,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
                         AND `date`<= '".$_SESSION['glpi_plugin_fusioninventory_date_end']." 23:59:59'
                      ORDER BY date asc
                      LIMIT 1";
-                  $result = $DB->query($query);
+                  $result = $DB->doQuery($query);
                   while ($data2 = $DB->fetchArray($result)) {
                      $_SESSION['glpi_plugin_fusioninventory_history_start'] = $data2;
                   }
@@ -699,7 +699,7 @@ function plugin_fusioninventory_giveItem($type, $id, $data, $num) {
                         AND `date`<= '".$_SESSION['glpi_plugin_fusioninventory_date_end']." 23:59:59'
                      ORDER BY date desc
                      LIMIT 1";
-                  $result = $DB->query($query);
+                  $result = $DB->doQuery($query);
                   while ($data2 = $DB->fetchArray($result)) {
                      $_SESSION['glpi_plugin_fusioninventory_history_end'] = $data2;
                   }

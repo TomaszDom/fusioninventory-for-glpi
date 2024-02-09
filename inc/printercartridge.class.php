@@ -82,7 +82,7 @@ class PluginFusioninventoryPrinterCartridge extends CommonDBTM {
                                               FROM `glpi_cartridgeitems_printermodels` AS c, `glpi_printers` AS p
                                               WHERE `c`.`printermodels_id`=`p`.`printermodels_id` and `p`.`id`='$id')";
 
-      $result_cartridges = $DB->query($query_cartridges);
+      $result_cartridges = $DB->doQuery($query_cartridges);
       $exclude_cartridges = [];
 
       if ($result_cartridges !== false) {

@@ -60,22 +60,22 @@ class InstallationTest extends TestCase {
 
       // Delete if Table of FusionInventory or Tracker yet in DB
       $query = "SHOW FULL TABLES WHERE TABLE_TYPE LIKE 'VIEW'";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       while ($data=$DB->fetchArray($result)) {
          if (strstr($data[0], "fusi")) {
-            $DB->query("DROP VIEW ".$data[0]);
+            $DB->doQuery("DROP VIEW ".$data[0]);
          }
       }
 
       $query = "SHOW TABLES";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       while ($data=$DB->fetchArray($result)) {
          if (strstr($data[0], "tracker")
             OR strstr($data[0], "fusi")) {
-               $DB->query("DROP TABLE ".$data[0]);
+               $DB->doQuery("DROP TABLE ".$data[0]);
          }
       }
-      $DB->query('TRUNCATE TABLE glpi_plugins');
+      $DB->doQuery('TRUNCATE TABLE glpi_plugins');
       $this->_install();
    }
 

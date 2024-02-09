@@ -480,7 +480,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                  FROM `".$pfTask->getTable()."`
                  WHERE `id`='".$tasks_id."'
                  LIMIT 1";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       $data   = $DB->fetchAssoc($result);
       $period = $pfTaskjob->periodicityToTimestamp($data['periodicity_type'],
                                                    $data['periodicity_count']);
@@ -490,7 +490,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                      FROM `".$pfTaskjob->getTable()."`
                      WHERE `plugin_fusioninventory_tasks_id`='".$tasks_id."'
                      ORDER BY `id` DESC";
-      $resultJob   = $DB->query($queryJob);
+      $resultJob   = $DB->doQuery($queryJob);
       $nb_taskjobs = $DB->numrows($resultJob);
       // get only with execution_id (same +1) as task
       $queryJob    = "SELECT *
@@ -499,7 +499,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
                          AND `execution_id`='".($data['execution_id'] + 1)."'
                       ORDER BY `id` DESC";
       $finished    = 2;
-      $resultJob   = $DB->query($queryJob);
+      $resultJob   = $DB->doQuery($queryJob);
       $nb_finished = 0;
       while ($dataJob = $DB->fetchArray($resultJob)) {
          $a_taskjobstateuniqs = $pfTaskjobstate->find(
@@ -535,7 +535,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
             WHERE `plugin_fusioninventory_tasks_id`='".$tasks_id."'
                AND `execution_id`='".$data['execution_id']."'
             ORDER BY `id` DESC";
-            $resultJob2 = $DB->query($queryJob2);
+            $resultJob2 = $DB->doQuery($queryJob2);
             if ($DB->numrows($resultJob2) == $nb_taskjobs) {
                $finished = 1;
                return true;
@@ -640,7 +640,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
             WHERE `glpi_plugin_fusioninventory_taskjobs`.`id`='".
                  $data['plugin_fusioninventory_taskjobs_id']."'
             LIMIT 1 ";
-         $result = $DB->query($sql);
+         $result = $DB->doQuery($sql);
          if ($DB->numrows($result) != 0) {
             $task = $DB->fetchAssoc($result);
             if ($task['communication'] == 'pull') {
@@ -767,7 +767,7 @@ class PluginFusioninventoryTaskjob extends  PluginFusioninventoryTaskjobView {
          WHERE plugin_fusioninventory_taskjobs_id = `glpi_plugin_fusioninventory_taskjobs`.id
             AND glpi_plugin_fusioninventory_taskjobstates.state <3) = 0
             AND `glpi_plugin_fusioninventory_taskjobs`.`status`=1";
-      $result=$DB->query($sql);
+      $result=$DB->doQuery($sql);
       while ($data=$DB->fetchArray($result)) {
          $this->reinitializeTaskjobs($data['plugin_fusioninventory_tasks_id'], '1');
       }

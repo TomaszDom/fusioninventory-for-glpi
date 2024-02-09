@@ -400,7 +400,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
       $sql = " SELECT id, name
                FROM `".$this->getTable()."`
                ORDER BY name";
-      $res  = $DB->query($sql);
+      $res  = $DB->doQuery($sql);
       $nb   = $DB->numrows($res);
       $json = [];
       $i    = 0;
@@ -2035,7 +2035,7 @@ class PluginFusioninventoryDeployPackage extends CommonDBTM {
                 LEFT JOIN `glpi_plugin_fusioninventory_deploypackages_profiles`
                      ON (`glpi_plugin_fusioninventory_deploypackages_profiles`.`plugin_fusioninventory_deploypackages_id` = `$table`.`id`)
                $where";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       $a_packages = [];
       if ($DB->numrows($result) > 0) {
          while ($data = $DB->fetchAssoc($result)) {

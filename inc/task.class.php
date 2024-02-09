@@ -188,7 +188,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       //clean jobslogs
       //DB::delete() does not supports subqueries
-      $DB->query("DELETE FROM glpi_plugin_fusioninventory_taskjoblogs
+      $DB->doQuery("DELETE FROM glpi_plugin_fusioninventory_taskjoblogs
                   WHERE plugin_fusioninventory_taskjobstates_id IN (
                      SELECT states.id
                      FROM glpi_plugin_fusioninventory_taskjobstates AS states
@@ -199,7 +199,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
       //clean states
       //DB::delete() does not supports subqueries
-      $DB->query("DELETE FROM glpi_plugin_fusioninventory_taskjobstates
+      $DB->doQuery("DELETE FROM glpi_plugin_fusioninventory_taskjobstates
                   WHERE plugin_fusioninventory_taskjobs_id IN (
                      SELECT jobs.id
                      FROM glpi_plugin_fusioninventory_taskjobs AS jobs
@@ -301,7 +301,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "ORDER BY job.`id`",
       ]);
 
-      $query_result = $DB->query($query);
+      $query_result = $DB->doQuery($query);
       $results = [];
       if ($query_result) {
          $results = PluginFusioninventoryToolbox::fetchAssocByTable($query_result);
@@ -559,7 +559,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "ORDER BY job.`id`",
       ]);
 
-      $query_result = $DB->query($query);
+      $query_result = $DB->doQuery($query);
       $results      = [];
       if ($query_result) {
          $results = PluginFusioninventoryToolbox::fetchAssocByTable($query_result);
@@ -886,7 +886,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
                    LEFT JOIN `glpi_plugin_fusioninventory_taskjobs` AS job
                       ON (job.`id` = state.`plugin_fusioninventory_taskjobs_id`)
                    WHERE job.`plugin_fusioninventory_tasks_id`='".$task['id']."'";
-         $result = $DB->query($query);
+         $result = $DB->doQuery($query);
 
          if ($DB->result($result, 0, "cpt") == 0) {
             $index++;
@@ -1010,7 +1010,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          "end"   => 0
       ];
 
-      $data_structure['result'] = $DB->query($data_structure['query']);
+      $data_structure['result'] = $DB->doQuery($data_structure['query']);
 
       PluginFusioninventoryToolbox::logIfExtradebug(
          "pluginFusioninventory-tasks",
@@ -1189,7 +1189,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
 
          // Execute query to get all jobs states - log the query result
          $q_task_job_state['start'] = microtime(true);
-         $q_task_job_state['result'] = $DB->query($query_job_state);
+         $q_task_job_state['result'] = $DB->doQuery($query_job_state);
          $q_task_job_state['end'] = microtime(true);
          $q_task_job_state['duration'] = self::formatChrono($q_task_job_state);
 
@@ -1352,7 +1352,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             $query = $q_job_state_last_log['query'];
             $query = str_replace('RUN.ID', implode("', '", array_keys($runs_id)), $query);
             $q_job_state_last_log['real_query'] = $query;
-            $q_job_state_last_log['result'] = $DB->query($query);
+            $q_job_state_last_log['result'] = $DB->doQuery($query);
 
             $q_job_state_last_log['end'] = microtime(true);
             $q_job_state_last_log['duration'] = self::formatChrono($q_job_state_last_log);
@@ -1486,7 +1486,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             $active_task
             AND `periodicity_count` > 0
             AND `periodicity_type` != '0' ".$where;
-      return $DB->query($query);
+      return $DB->doQuery($query);
    }
 
 
@@ -1609,7 +1609,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          );
 
       $results = [];
-      $r = $DB->query($query);
+      $r = $DB->doQuery($query);
       if ($r) {
          $results = PluginFusioninventoryToolbox::fetchAssocByTable($r);
       }
@@ -1653,7 +1653,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
          GROUP BY plugin_fusioninventory_tasks_id
          ORDER BY `glpi_plugin_fusioninventory_taskjoblogs`.`date` DESC";
 
-      return $DB->query($query);
+      return $DB->doQuery($query);
    }
 
 
@@ -1694,7 +1694,7 @@ class PluginFusioninventoryTask extends PluginFusioninventoryTaskView {
             // feature will be properly activated in the taskjobs list.
             "ORDER BY job.`id`",
          ]);
-         $query_result = $DB->query($query);
+         $query_result = $DB->doQuery($query);
          $results = [];
          if ($query_result) {
             $results = PluginFusioninventoryToolbox::fetchAssocByTable($query_result);

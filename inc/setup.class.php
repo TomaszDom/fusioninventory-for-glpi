@@ -81,7 +81,7 @@ class PluginFusioninventorySetup {
          $pfSetup->rrmdir(GLPI_PLUGIN_DOC_DIR.'/fusioninventory');
       }
 
-      $result = $DB->query("SHOW TABLES;");
+      $result = $DB->doQuery("SHOW TABLES;");
       while ($data = $DB->fetchArray($result)) {
          if ((strstr($data[0], "glpi_plugin_fusioninventory_"))
                  OR (strstr($data[0], "glpi_plugin_fusinvsnmp_"))
@@ -91,7 +91,7 @@ class PluginFusioninventorySetup {
                 OR (strstr($data[0], "glpi_dropdown_plugin_tracker"))) {
 
             $query_delete = "DROP TABLE `".$data[0]."`;";
-            $DB->query($query_delete) or die($DB->error());
+            $DB->doQuery($query_delete) or die($DB->error());
          }
       }
 

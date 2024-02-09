@@ -331,7 +331,7 @@ class PluginFusioninventoryFormatconvert {
                       FROM `glpi_users`
                       WHERE `name` = '" . $split_user[0] . "'
                       LIMIT 1";
-            $result = $DB->query($query);
+            $result = $DB->doQuery($query);
             if ($DB->numrows($result) == 1) {
                $array_tmp['users_id'] = $DB->result($result, 0, 0);
             } else {
@@ -1892,7 +1892,7 @@ class PluginFusioninventoryFormatconvert {
                       FROM `glpi_users`
                       WHERE `name` = '" . $data['user'] . "'
                       LIMIT 1";
-            $result = $DB->query($query);
+            $result = $DB->doQuery($query);
             if ($DB->numrows($result) == 1) {
                $a_inventory['Computer']['users_id'] = $DB->result($result, 0, 0);
             }

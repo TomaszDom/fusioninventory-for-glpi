@@ -115,7 +115,7 @@ class RestURLTest extends TestCase {
       // active all modules
       $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules`"
               . " SET `is_active`='1'";
-      $DB->query($query);
+      $DB->doQuery($query);
    }
 
 

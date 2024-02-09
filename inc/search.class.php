@@ -691,13 +691,13 @@ class PluginFusioninventorySearch extends CommonDBTM {
                                            getEntitiesRestrictRequest('', $ctable, '', '',
                                                                       $citem->maybeRecursive()),
                                            $query_num);
-                  $result_num = $DBread->query($query_num);
+                  $result_num = $DBread->doQuery($query_num);
                   $numrows   += $DBread->result($result_num, 0, 0);
                }
             }
 
          } else {
-            $result_num = $DBread->query($query_num);
+            $result_num = $DBread->doQuery($query_num);
             $numrows    = $DBread->result($result_num, 0, 0);
          }
       }
@@ -812,15 +812,15 @@ class PluginFusioninventorySearch extends CommonDBTM {
                   $LIMIT;
       }
 
-      $DBread->query("SET SESSION group_concat_max_len = 4096;");
-      $result = $DBread->query($QUERY);
+      $DBread->doQuery("SET SESSION group_concat_max_len = 4096;");
+      $result = $DBread->doQuery($QUERY);
       /// Check group concat limit : if warning : increase limit
-      if ($result2 = $DBread->query('SHOW WARNINGS')) {
+      if ($result2 = $DBread->doQuery('SHOW WARNINGS')) {
          if ($DBread->numrows($result2) > 0) {
             $data = $DBread->fetchAssoc($result2);
             if ($data['Code'] == 1260) {
-               $DBread->query("SET SESSION group_concat_max_len = 4194304;");
-               $result = $DBread->query($QUERY);
+               $DBread->doQuery("SET SESSION group_concat_max_len = 4194304;");
+               $result = $DBread->doQuery($QUERY);
             }
          }
       }

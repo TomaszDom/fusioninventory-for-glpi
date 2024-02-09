@@ -494,7 +494,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
                 FROM `glpi_plugin_fusioninventory_locks`
                 WHERE `tablename`='".$p_table."'
                       AND `tablefields` LIKE '%".$p_fieldToDel."%';";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       while ($data=$DB->fetchArray($result)) {
          // TODO improve the lock deletion by transmiting the old locked fields to the
          // deletion function
@@ -628,7 +628,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
                 FROM `glpi_plugin_fusioninventory_locks`
                 WHERE `tablename`='".$p_table."'
                       AND `items_id`='".$p_items_id."';";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       return $result;
    }
 
@@ -778,7 +778,7 @@ class PluginFusioninventoryLock extends CommonDBTM{
 
       if ($DB->tableExists('glpi_ocslinks')) {
          $sql = "SELECT * FROM `glpi_ocslinks`";
-         $result=$DB->query($sql);
+         $result=$DB->doQuery($sql);
          while ($data=$DB->fetchArray($result)) {
             $a_ocslocks = importArrayFromDB($data['computer_update']);
             $a_fields = [];

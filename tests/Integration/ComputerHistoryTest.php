@@ -267,7 +267,7 @@ class ComputerHistoryTest extends TestCase {
 
       // add computer
       $pfCommunication->handleOCSCommunication('', $xml, 'glpi');
-      $DB->query("TRUNCATE TABLE `glpi_logs`");
+      $DB->doQuery("TRUNCATE TABLE `glpi_logs`");
 
       // find number of computers
       $found = $computer->find();

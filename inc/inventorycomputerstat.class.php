@@ -147,7 +147,7 @@ class PluginFusioninventoryInventoryComputerStat extends CommonDBTM {
                     ."WHERE `day`='".date('z', $timestampSearch)."' "
                     ."   AND `hour`='".date('G', $timestampSearch)."' "
                     ."LIMIT 1";
-         $result = $DB->query($query);
+         $result = $DB->doQuery($query);
          $data = $DB->fetchAssoc($result);
          $cnt = 0;
          if (!is_null($data)) {

@@ -120,7 +120,7 @@ WHERE ((NOW() > ADDDATE(last_fusioninventory_update, INTERVAL ".$nbdays." DAY)
 
 ORDER BY last_fusioninventory_update DESC";
 
-$result = $DB->query($query);
+$result = $DB->doQuery($query);
 
 echo "<table class='tab_cadre_fixe' cellpadding='5' width='950'>";
 

@@ -83,7 +83,7 @@ class FusinvDB extends Assert{
       $a_tables = [];
       // SHOW TABLES;
       $query = "SHOW TABLES";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       while ($data=$DB->fetchArray($result)) {
          if ((strstr($data[0], "tracker")
                 OR strstr($data[0], 'fusioninventory')
@@ -106,7 +106,7 @@ class FusinvDB extends Assert{
 
       foreach ($a_tables as $table) {
          $query = "SHOW CREATE TABLE ".$table;
-         $result = $DB->query($query);
+         $result = $DB->doQuery($query);
          while ($data=$DB->fetchArray($result)) {
             $a_lines = explode("\n", $data['Create Table']);
 
@@ -205,44 +205,44 @@ class FusinvDB extends Assert{
        */
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
          WHERE `modulename`='WAKEONLAN'";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       $this->assertEquals($DB->numrows($result), 1, 'WAKEONLAN module not registered');
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
          WHERE `modulename`='INVENTORY'";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       $this->assertEquals($DB->numrows($result), 1, 'INVENTORY module not registered');
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
          WHERE `modulename`='InventoryComputerESX'";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       $this->assertEquals($DB->numrows($result), 1, 'ESX module not registered');
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
          WHERE `modulename`='NETWORKINVENTORY'";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       $this->assertEquals($DB->numrows($result), 1, 'NETWORKINVENTORY module not registered');
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
          WHERE `modulename`='NETWORKDISCOVERY'";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       $this->assertEquals($DB->numrows($result), 1, 'NETWORKDISCOVERY module not registered');
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
          WHERE `modulename`='ESX'";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       $this->assertEquals($DB->numrows($result), 0, 'ESX module may be renommed in InventoryComputerESX');
 
       //      $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_agentmodules`
       //         WHERE `modulename`='DEPLOY'";
-      //      $result = $DB->query($query);
+      //      $result = $DB->doQuery($query);
       //      $this->assertEquals($DB->numrows($result), 1, 'DEPLOY module not registered');
 
       /*
        * Verify in taskjob definition PluginFusinvsnmpIPRange not exist
        */
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_taskjobs`";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       while ($data=$DB->fetchArray($result)) {
          $snmprangeip = 0;
          if (strstr($data['targets'], "PluginFusinvsnmpIPRange")) {
@@ -278,49 +278,49 @@ class FusinvDB extends Assert{
       }
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
          WHERE `type`='ssl_only'";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'ssl_only' not added in config for plugins ".$plugins_id);
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
          WHERE `type`='delete_task'";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'delete_task' not added in config");
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
          WHERE `type`='inventory_frequence'";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'inventory_frequence' not added in config");
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
          WHERE `type`='agent_port'";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'agent_port' not added in config");
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
          WHERE `type`='extradebug'";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'extradebug' not added in config");
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
          WHERE `type`='users_id'";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'users_id' not added in config");
 
       $query = "SELECT * FROM `glpi_plugin_fusioninventory_configs`
          WHERE `type`='version'";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'version' not added in config");
       $data = $DB->fetchAssoc($result);
       $this->assertEquals($data['value'], PLUGIN_FUSIONINVENTORY_VERSION, "Field 'version' not with right version");
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
          WHERE `type`='otherserial'";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'otherserial' not added in config");
 
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_configs`
          WHERE `type`='agents_status'";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       $this->assertEquals($DB->numrows($result), 1, "type 'agents_status' not added in config");
 
       // TODO : test glpi_displaypreferences, rules, SavedSearch...
@@ -330,7 +330,7 @@ class FusinvDB extends Assert{
        * have right 10 lines
        */
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_inventorycomputercriterias`";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       $this->assertEquals($DB->numrows($result), 11, "Number of criteria not right in table".
               " glpi_plugin_fusioninventory_inventorycomputercriterias ".$when);
 
@@ -338,7 +338,7 @@ class FusinvDB extends Assert{
        * Verify table `glpi_plugin_fusioninventory_inventorycomputerstats` filed with data
        */
       $query = "SELECT `id` FROM `glpi_plugin_fusioninventory_inventorycomputerstats`";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       $this->assertEquals($DB->numrows($result), 8760, "Must have table `glpi_plugin_fusioninventory_inventorycomputerstats` not empty");
 
    }

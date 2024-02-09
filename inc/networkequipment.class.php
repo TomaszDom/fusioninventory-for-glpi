@@ -164,7 +164,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
       ON glpi_plugin_fusioninventory_networkports.networkports_id = glpi_networkports.id
       WHERE glpi_networkports.items_id='".$id."'
          AND glpi_networkports.itemtype='NetworkEquipment'";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       if ($DB->numrows($result) == 0) {
          NetworkPort::showForItem($item);
          return;
@@ -226,12 +226,12 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
          AND glpi_networkports.itemtype='NetworkEquipment'
          AND `instantiation_type`='NetworkPortAggregate'
       ORDER BY logical_number ";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       while ($data = $DB->fetchArray($result)) {
          $query_ag = "SELECT * FROM `glpi_networkportaggregates`
             WHERE `networkports_id`='".$data['id']."'
             LIMIT 1";
-         $result_ag = $DB->query($query_ag);
+         $result_ag = $DB->doQuery($query_ag);
          if ($DB->numrows($result_ag) > 0) {
             $data_ag = $DB->fetchAssoc($result_ag);
             $a_ports = importArrayFromDB($data_ag['networkports_id_list']);
@@ -293,7 +293,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
                $query_ag = "SELECT * FROM `glpi_networkportaggregates`
                   WHERE `networkports_id`='".$data['id']."'
                   LIMIT 1";
-               $result_ag = $DB->query($query_ag);
+               $result_ag = $DB->doQuery($query_ag);
                if ($DB->numrows($result_ag) > 0) {
                   $data_ag = $DB->fetchAssoc($result_ag);
                   $a_ports = importArrayFromDB($data_ag['networkports_id_list']);
@@ -309,7 +309,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
                            glpi_networkports.id
                      WHERE `glpi_networkports`.`id`='".$port_id."'
                      LIMIT 1 ";
-                     $result_agp = $DB->query($query_agp);
+                     $result_agp = $DB->doQuery($query_agp);
                      if ($DB->numrows($result_agp) > 0) {
                         $data_agp = $DB->fetchAssoc($result_agp);
                         $this->showNetworkPortDetail($data_agp, $monitoring, true);
@@ -465,7 +465,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
       $query = "SELECT *
                 FROM `glpi_plugin_fusioninventory_networkequipments`
                 WHERE `networkequipments_id`='".$id."';";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       if ($DB->numrows($result) == "0") {
          $DB->insert(
             'glpi_plugin_fusioninventory_networkequipments', [
@@ -552,7 +552,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
       echo "<th colspan='".(count($a_pref) + 3)."'>";
       echo __('Ports array', 'fusioninventory');
 
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       echo ' ('.$DB->numrows($result).')';
 
       $tmp = " class='pointer' onClick=\"";
@@ -906,7 +906,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
                                        AND `items_id`='".$data_device["items_id"]."'
                                        AND `id`!='".$data_device["id"]."'
                                    LIMIT 1";
-                           $result_devicephone = $DB->query($query_devicephone);
+                           $result_devicephone = $DB->doQuery($query_devicephone);
                            if ($DB->numrows($result_devicephone) > 0) {
                               $data_devicephone = $DB->fetchAssoc($result_devicephone);
                               $computer_ports_id = $nw->getOppositeContact($data_devicephone["id"]);
@@ -976,7 +976,7 @@ class PluginFusioninventoryNetworkEquipment extends PluginFusioninventoryItem {
 
                $query_vlan = "SELECT * FROM glpi_networkports_vlans
                               WHERE networkports_id='".$data["id"]."'";
-               $result_vlan = $DB->query($query_vlan);
+               $result_vlan = $DB->doQuery($query_vlan);
                if ($DB->numrows($result_vlan) > 0) {
                   echo "<table cellpadding='0' cellspacing='0'>";
                   while ($line = $DB->fetchArray($result_vlan)) {

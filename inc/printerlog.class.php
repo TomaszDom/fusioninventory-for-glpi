@@ -300,7 +300,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
       $query = "SELECT count(DISTINCT `id`)
                 FROM ".$this->getTable()."
                 WHERE `printers_id` = '".$printers_id."';";
-      $result_num=$DB->query($query);
+      $result_num=$DB->doQuery($query);
       if ($result_num) {
          $field = $DB->result($result_num, 0, 0);
          if ($field) {
@@ -328,7 +328,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
                 FROM ".$this->getTable()."
                 WHERE `printers_id` = '".$printers_id."'
                 LIMIT ".$begin.", ".$limit.";";
-      $result=$DB->query($query);
+      $result=$DB->doQuery($query);
       if ($result) {
          $i = 0;
          while ($data=$DB->fetchAssoc($result)) {
@@ -356,7 +356,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
                   "MAX(`date`) AS `max_date`, MAX(`pages`) AS `max_pages`
                 FROM ".$this->getTable()."
                 WHERE `printers_id` = '".$printers_id."';";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       if ($result) {
          $fields = $DB->fetchAssoc($result);
          if ($fields) {
@@ -697,7 +697,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
              .$where.
                 " AND `".$graphField."` > 0 "
              .$group;
-         $result = $DB->query($query);
+         $result = $DB->doQuery($query);
          if ($DB->numrows($result) == 0 AND $graphField != "pages_total") {
             unset($elementsField[$graphField]);
          }
@@ -712,7 +712,7 @@ class PluginFusioninventoryPrinterLog extends CommonDBTM {
              ORDER BY `year`, `month`, `day`, `printers_id`";
 
          $input = [];
-         $result = $DB->query($query);
+         $result = $DB->doQuery($query);
 
          if ($result) {
             if ($DB->numrows($result) != 0) {

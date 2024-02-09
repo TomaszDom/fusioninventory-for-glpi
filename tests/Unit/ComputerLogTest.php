@@ -58,7 +58,7 @@ class ComputerLogTest extends TestCase {
       global $DB;
 
       // truncate glpi_logs
-      $DB->query('TRUNCATE TABLE `glpi_logs`;');
+      $DB->doQuery('TRUNCATE TABLE `glpi_logs`;');
    }
 
    /**
@@ -354,7 +354,7 @@ class ComputerLogTest extends TestCase {
       unset($inventory['processor'][3]);
       unset($inventory['software']['orbit2$$$$2.14.19$$$$3$$$$0$$$$0']);
 
-      $DB->query('TRUNCATE TABLE `glpi_logs`');
+      $DB->doQuery('TRUNCATE TABLE `glpi_logs`');
       $pfiComputerLib->updateComputer($inventory, $id, false);
 
       $a_logs = getAllDataFromTable('glpi_logs');

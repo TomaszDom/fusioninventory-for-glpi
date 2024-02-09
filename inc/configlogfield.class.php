@@ -104,7 +104,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
                   $query = "SELECT *  FROM `glpi_plugin_fusioninventory_configlogfields`
                      WHERE `plugin_fusioninventory_mappings_id` = '".$mapfields['id']."'
                      LIMIT 1,1000";
-                  $result=$DB->query($query);
+                  $result=$DB->doQuery($query);
 
                   $delete = $DB->buildDelete(
                      'glpi_plugin_fusioninventory_configlogfields', [
@@ -141,7 +141,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
                 FROM ".$this->getTable()."
                 WHERE `plugin_fusioninventory_mappings_id`='".$field."'
                 LIMIT 1;";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       if ($result) {
          $fields = $DB->fetchRow($result);
          if ($fields) {
@@ -199,7 +199,7 @@ class PluginFusioninventoryConfigLogField extends CommonDBTM {
                 WHERE `".$this->getTable()."`.`plugin_fusioninventory_mappings_id`=
                          `glpi_plugin_fusioninventory_mappings`.`id`
                 ORDER BY `itemtype`, `name`;";
-      $result=$DB->query($query);
+      $result=$DB->doQuery($query);
       if ($result) {
          while ($data=$DB->fetchArray($result)) {
             echo "<tr class='tab_bg_1'>";

@@ -494,8 +494,8 @@ class CronTaskTest extends TestCase {
       $pfTask       = new PluginFusioninventoryTask();
       $deploycommon = new PluginFusioninventoryDeployCommon();
 
-      $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_taskjoblogs`");
-      $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_taskjobstates`");
+      $DB->doQuery("TRUNCATE TABLE `glpi_plugin_fusioninventory_taskjoblogs`");
+      $DB->doQuery("TRUNCATE TABLE `glpi_plugin_fusioninventory_taskjobstates`");
 
       $pfTask->getFromDBByCrit(['name' => 'deploy']);
       $this->assertArrayHasKey('id', $pfTask->fields);
@@ -678,8 +678,8 @@ class CronTaskTest extends TestCase {
       $pfTask->delete(['id' => $pfTask->fields['id']], true);
 
       //Clean all taskjoblogs & states
-      $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_taskjoblogs`");
-      $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_taskjobstates`");
+      $DB->doQuery("TRUNCATE TABLE `glpi_plugin_fusioninventory_taskjoblogs`");
+      $DB->doQuery("TRUNCATE TABLE `glpi_plugin_fusioninventory_taskjobstates`");
 
       //Find the on demand task
       $tasks = $pfTask->find(['name' => 'ondemand']);
@@ -709,7 +709,7 @@ class CronTaskTest extends TestCase {
 
       $query = "UPDATE `glpi_plugin_fusioninventory_taskjoblogs`
                 SET `date`='".$datetime->format('Y-m-d')." 00:00:00'";
-      $DB->query($query);
+      $DB->doQuery($query);
 
       //No task & jobs should be removed because ask for cleaning 5 days from now
       $index = $pfTask->cleanTasksAndJobs(5);
@@ -759,7 +759,7 @@ class CronTaskTest extends TestCase {
 
       $query = "UPDATE `glpi_plugin_fusioninventory_taskjoblogs`
                 SET `date`='".$datetime->format('Y-m-d')." 00:00:00'";
-      $DB->query($query);
+      $DB->doQuery($query);
 
       //One taskjob is finished and should be cleaned
       $index = $pfTask->cleanTasksAndJobs(2);

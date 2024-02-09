@@ -71,7 +71,7 @@ $query = "SELECT `glpi_networkequipments`.`name` as `name`, `glpi_networkports`.
           WHERE `itemtype`='NetworkEquipment'
           ORDER BY `glpi_networkequipments`.`name`, `glpi_networkports`.`logical_number`;";
 
-$result=$DB->query($query);
+$result=$DB->doQuery($query);
       $selected = '';
 while ($data=$DB->fetchArray($result)) {
 

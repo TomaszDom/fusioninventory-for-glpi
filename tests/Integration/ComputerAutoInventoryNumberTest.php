@@ -156,7 +156,7 @@ class ComputerAutoInventoryNumberTest extends TestCase {
 
       // Because update, delete lock
       $pfLock = new PluginFusioninventoryLock();
-      $DB->query('DELETE FROM glpi_plugin_fusioninventory_locks');
+      $DB->doQuery('DELETE FROM glpi_plugin_fusioninventory_locks');
 
       $computer = new Computer();
       $computer->getFromDBByCrit(['name' => 'pc001']);

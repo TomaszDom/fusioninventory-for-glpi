@@ -86,7 +86,7 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
          WHERE `vendorid`='".$vendorId."'
             AND `deviceid`='".$pciidArray[1]."'
             LIMIT 1";
-      $resultSelect = $DB->query($query_select);
+      $resultSelect = $DB->doQuery($query_select);
       if ($DB->numrows($resultSelect) > 0) {
          $data = $DB->fetchAssoc($resultSelect);
          $a_return['name'] = html_entity_decode($data['name']);
@@ -115,7 +115,7 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
       $query_select = "SELECT id, name FROM `glpi_plugin_fusioninventory_usbvendors`
         WHERE `vendorid`='".$vendorId."'
         LIMIT 1";
-      $resultSelect = $DB->query($query_select);
+      $resultSelect = $DB->doQuery($query_select);
       if ($DB->numrows($resultSelect) > 0) {
          $data = $DB->fetchAssoc($resultSelect);
          $vendors_id = $data['id'];
@@ -125,7 +125,7 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
            WHERE `deviceid`='".$deviceId."'
               AND `plugin_fusioninventory_usbvendor_id`='".$vendors_id."'
            LIMIT 1";
-         $resultSelectd = $DB->query($query_selectd);
+         $resultSelectd = $DB->doQuery($query_selectd);
          if ($DB->numrows($resultSelectd) > 0) {
             $data = $DB->fetchAssoc($resultSelectd);
             $devices_name = html_entity_decode($data['name']);
@@ -152,7 +152,7 @@ class PluginFusioninventoryInventoryExternalDB extends CommonDBTM {
          $query_select = "SELECT name FROM `glpi_plugin_fusioninventory_ouis`
            WHERE `mac`='".$searchMac."'
            LIMIT 1";
-         $resultSelect = $DB->query($query_select);
+         $resultSelect = $DB->doQuery($query_select);
          if ($DB->numrows($resultSelect) == 1) {
             $data = $DB->fetchAssoc($resultSelect);
             return $data['name'];

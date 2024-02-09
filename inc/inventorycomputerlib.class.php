@@ -1914,7 +1914,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       //            $query = "SELECT `id`, `uuid` FROM ".
       //                "`glpi_plugin_fusioninventory_inventorycomputerstorages`
       //                WHERE `computers_id` = '$computers_id'";
-      //            $result = $DB->query($query);
+      //            $result = $DB->doQuery($query);
       //            while ($data = $DB->fetchAssoc($result)) {
       //               $idtmp = $data['id'];
       //               unset($data['id']);
@@ -2530,7 +2530,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
                       FROM `glpi_users`
                       WHERE `name` = '" . $user . "'
                       LIMIT 1";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
 
       return $DB->numrows($result) == 1 ? $DB->result($result, 0, 0) : 0;
    }
@@ -2571,7 +2571,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       $whereid .= " AND CONCAT_WS('$$$$', `name`, `manufacturers_id`) IN (".implode(",", $a_softSearch).")";
 
       $sql     = "SELECT max( id ) AS max FROM `glpi_softwares`";
-      $result  = $DB->query($sql);
+      $result  = $DB->doQuery($sql);
       $data    = $DB->fetchAssoc($result);
       $lastid  = $data['max'];
       $whereid.= " AND `id` <= '".$lastid."'";
@@ -2626,7 +2626,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
       $whereid .= " ) ";
 
       $sql = "SELECT max( id ) AS max FROM `glpi_softwareversions`";
-      $result = $DB->query($sql);
+      $result = $DB->doQuery($sql);
       $data = $DB->fetchAssoc($result);
       $lastid = $data['max'];
       $whereid .= " AND `id` <= '".$lastid."'";
@@ -2637,7 +2637,7 @@ class PluginFusioninventoryInventoryComputerLib extends PluginFusioninventoryInv
 
       $sql = "SELECT `id`, `name`, `softwares_id`, `operatingsystems_id` FROM `glpi_softwareversions`
       WHERE `entities_id`='".$entities_id."'".$whereid;
-      $result = $DB->query($sql);
+      $result = $DB->doQuery($sql);
       while ($data = $DB->fetchAssoc($result)) {
          $this->softVersionList[strtolower($data['name'])."$$$$".$data['softwares_id']."$$$$".$data['operatingsystems_id']] = $data['id'];
       }

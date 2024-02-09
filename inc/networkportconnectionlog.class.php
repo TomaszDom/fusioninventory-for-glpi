@@ -116,7 +116,7 @@ class PluginFusioninventoryNetworkPortConnectionLog extends CommonDBTM {
          $query .= " LIMIT 0, 500";
       }
 
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       if ($result) {
          while ($data=$DB->fetchArray($result)) {
             echo "<tr class='tab_bg_1 center'>";

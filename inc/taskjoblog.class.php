@@ -648,7 +648,7 @@ function appear_array(id) {
             OR `glpi_plugin_fusioninventory_taskjoblogs`.`state` = '5')
          GROUP BY glpi_plugin_fusioninventory_taskjobstates.uniqid, ".
               "plugin_fusioninventory_agents_id";
-      $result=$DB->query($query);
+      $result=$DB->doQuery($query);
       if ($result) {
          while ($datajob=$DB->fetchArray($result)) {
             $finishState[$datajob['state']]++;

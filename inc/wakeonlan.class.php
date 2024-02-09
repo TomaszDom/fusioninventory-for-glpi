@@ -102,7 +102,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                      FROM glpi_plugin_fusioninventory_deploygroups_staticdatas
                      WHERE groups_id = '$items_id'
                      AND itemtype = 'Computer'";
-                     $res = $DB->query($query);
+                     $res = $DB->doQuery($query);
                      while ($row = $DB->fetchAssoc($res)) {
                         $a_computers_to_wake[] = $row['items_id'];
                      }
@@ -113,7 +113,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                      FROM glpi_plugin_fusioninventory_deploygroups_dynamicdatas
                      WHERE groups_id = '$items_id'
                      LIMIT 1";
-                     $res = $DB->query($query);
+                     $res = $DB->doQuery($query);
                      $row = $DB->fetchAssoc($res);
 
                      if (isset($_GET)) {
@@ -189,7 +189,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                WHERE `items_id`='".$items_id."'
                   AND `itemtype`='Computer'
                   AND `mac`!='' ";
-            $result = $DB->query($sql);
+            $result = $DB->doQuery($sql);
             if ($result) {
                while ($data=$DB->fetchArray($result)) {
                   $subnet = $data['subnet'];
@@ -399,7 +399,7 @@ class PluginFusioninventoryWakeonlan extends PluginFusioninventoryCommunication 
                ".$subnet."
                ".$osfind."
                ".$where." ";
-         if ($result = $DB->query($query)) {
+         if ($result = $DB->doQuery($query)) {
             while ($data=$DB->fetchArray($result)) {
                if ($communication == 'push') {
                   if ($pfTaskjob->isAgentAlive(1, $data['a_id'])) {

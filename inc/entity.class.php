@@ -231,7 +231,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
                AND `".$name."` IS NOT NULL
                ".$where."
             LIMIT 1";
-         $result = $DB->query($query);
+         $result = $DB->doQuery($query);
          if ($DB->numrows($result) != 0) {
             $data = $DB->fetchAssoc($result);
             return $data[$name];
@@ -263,7 +263,7 @@ class PluginFusioninventoryEntity extends CommonDBTM {
             AND `".$name."` IS NOT NULL
             ".$where."
          LIMIT 1";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       if ($DB->numrows($result) > 0) {
          $data = $DB->fetchAssoc($result);
          return $data[$name];

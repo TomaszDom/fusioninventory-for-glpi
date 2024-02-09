@@ -335,7 +335,7 @@ class ComputerPeripheralTest extends TestCase {
       $query = "SELECT * FROM `glpi_logs`
          ORDER BY `id` DESC LIMIT 1";
 
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       $data = $DB->fetchAssoc($result);
       $last_id = $data['id'];
       $pfInventoryComputerInventory->import('deviceid',

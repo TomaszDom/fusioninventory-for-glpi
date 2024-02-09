@@ -61,6 +61,6 @@ class PluginFusioninventoryDBMysqlLock extends DB {
      * @return mysqli_result|boolean Query result handler
      */
    public function queryNoError($query) {
-      return $this->dbh->query($query);
+      return $this->dbh->doQuery($query);
    }
 }

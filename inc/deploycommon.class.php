@@ -174,7 +174,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                      FROM glpi_plugin_fusioninventory_deploygroups_staticdatas
                      WHERE groups_id = '$items_id'
                      AND itemtype = 'Computer'";
-                     $res = $DB->query($query);
+                     $res = $DB->doQuery($query);
                      while ($row = $DB->fetchAssoc($res)) {
                         $computers[] = $row['items_id'];
                      }
@@ -195,7 +195,7 @@ class PluginFusioninventoryDeployCommon extends PluginFusioninventoryCommunicati
                      FROM glpi_plugin_fusioninventory_deploygroups_dynamicdatas
                      WHERE groups_id = '$items_id' $where
                      LIMIT 1";
-                     $res = $DB->query($query);
+                     $res = $DB->doQuery($query);
                      $row = $DB->fetchAssoc($res);
                      //No dynamic groups have been found : break
                      if ($DB->numrows($res) == 0) {

@@ -111,24 +111,24 @@ class UpdateTest extends TestCase {
       $plugin->uninstall($plugin->fields['id']);
 
       $query = "SHOW TABLES";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       while ($data=$DB->fetchArray($result)) {
          if (strstr($data[0], "tracker")
                  OR strstr($data[0], "fusi")) {
-            $DB->query("DROP TABLE ".$data[0]);
+            $DB->doQuery("DROP TABLE ".$data[0]);
          }
       }
       $query = "DELETE FROM `glpi_displaypreferences`
          WHERE `itemtype` LIKE 'PluginFus%'";
-      $DB->query($query);
+      $DB->doQuery($query);
 
       $query = "DELETE FROM `glpi_crontasks`
          WHERE `itemtype` LIKE 'PluginFus%'";
-      $DB->query($query);
+      $DB->doQuery($query);
 
       $query = "DELETE FROM `glpi_plugins`
          WHERE `name` LIKE 'FusionInv%'";
-      $DB->query($query);
+      $DB->doQuery($query);
 
       // Delete all fusion rules
       $rule = new Rule();
@@ -136,9 +136,9 @@ class UpdateTest extends TestCase {
       foreach ($items as $item) {
          $rule->delete(['id' => $item['id']], true);
       }
-      $DB->query('DELETE FROM glpi_ruleactions WHERE id > 105');
-      $DB->query('DELETE FROM glpi_rulecriterias WHERE id > 108');
-      $DB->query('DELETE FROM glpi_rules WHERE id > 105');
+      $DB->doQuery('DELETE FROM glpi_ruleactions WHERE id > 105');
+      $DB->doQuery('DELETE FROM glpi_rulecriterias WHERE id > 108');
+      $DB->doQuery('DELETE FROM glpi_rules WHERE id > 105');
 
       if ($version != '') {
          $sqlfile = "tests/Installation/mysql/i-".$version.".sql";

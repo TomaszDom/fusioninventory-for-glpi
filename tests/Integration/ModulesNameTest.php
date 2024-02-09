@@ -163,7 +163,7 @@ class ModulesNameTest extends TestCase {
 
       $pfCommunication  = new PluginFusioninventoryCommunication();
 
-      $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs`");
+      $DB->doQuery("TRUNCATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs`");
       $pfCommunication->handleOCSCommunication('', $xml, 'glpi');
 
       $iterator = $DB->request([
@@ -176,7 +176,7 @@ class ModulesNameTest extends TestCase {
       }
 
       // second run (update)
-      $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs`");
+      $DB->doQuery("TRUNCATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs`");
       $pfCommunication->handleOCSCommunication('', $xml, 'glpi');
 
       $iterator = $DB->request([
@@ -246,7 +246,7 @@ class ModulesNameTest extends TestCase {
       $pfCommunication  = new PluginFusioninventoryCommunication();
       $versions = ['SNMPQUERY', 'SNMPINVENTORY'];
       foreach ($versions as $versionName) {
-         $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs`");
+         $DB->doQuery("TRUNCATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs`");
          $xmlNew = str_replace('MODULENAMETEST', $versionName, $xml);
          $pfCommunication->handleOCSCommunication('', $xmlNew, 'glpi');
 
@@ -332,7 +332,7 @@ class ModulesNameTest extends TestCase {
       $query = "UPDATE `glpi_plugin_fusioninventory_agentmodules` "
               . " SET `is_active`='1' "
               . " WHERE `modulename`='NETWORKDISCOVERY'";
-      $DB->query($query);
+      $DB->doQuery($query);
 
       // create task
       $input = [
@@ -361,7 +361,7 @@ class ModulesNameTest extends TestCase {
          $xml = str_replace("<PROCESSNUMBER>1</PROCESSNUMBER>", "<PROCESSNUMBER>".$jobstate['id']."</PROCESSNUMBER>", $xml);
       }
 
-      $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs`");
+      $DB->doQuery("TRUNCATE TABLE `glpi_plugin_fusioninventory_rulematchedlogs`");
       $pfCommunication->handleOCSCommunication('', $xml, 'glpi');
 
       $iterator = $DB->request([

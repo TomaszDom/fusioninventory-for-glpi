@@ -146,7 +146,7 @@ class ImportRuleTest extends TestCase {
          $ruleARN = $rule->find(['name' => $afterRuleName], [], 1);
          if (count($ruleARN) > 0) {
             $r = current($ruleARN);
-            $DB->query("UPDATE glpi_rules "
+            $DB->doQuery("UPDATE glpi_rules "
                   . "SET ranking = ranking + 1 "
                   . "WHERE ranking > '".$r['ranking']."' "
                   . "   AND `sub_type`='PluginFusioninventoryInventoryRuleImport'");
@@ -155,7 +155,7 @@ class ImportRuleTest extends TestCase {
          }
       }
       $rules_id = $rulecollection->add($input);
-      $DB->query("UPDATE glpi_rules SET `ranking`=1"
+      $DB->doQuery("UPDATE glpi_rules SET `ranking`=1"
             . " WHERE `id`=".$rules_id);
 
       // Add criteria

@@ -306,7 +306,7 @@ class ComputerEntityTest extends TestCase {
       $pfiComputerInv = new PluginFusioninventoryInventoryComputerInventory();
 
       // Disable all rules
-      $DB->query("UPDATE `glpi_rules`
+      $DB->doQuery("UPDATE `glpi_rules`
          SET `is_active`='0'
          WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport'");
 

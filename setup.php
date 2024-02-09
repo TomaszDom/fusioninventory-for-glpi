@@ -45,11 +45,11 @@
  *
  */
 
-define ("PLUGIN_FUSIONINVENTORY_VERSION", "10.0.6+1.1");
+define ("PLUGIN_FUSIONINVENTORY_VERSION", "10.0.12+1.0");
 // Minimal GLPI version, inclusive
-define('PLUGIN_FUSIONINVENTORY_GLPI_MIN_VERSION', '10.0.6');
+define('PLUGIN_FUSIONINVENTORY_GLPI_MIN_VERSION', '10.0.12');
 // Maximum GLPI version, exclusive
-define('PLUGIN_FUSIONINVENTORY_GLPI_MAX_VERSION', '10.0.7');
+define('PLUGIN_FUSIONINVENTORY_GLPI_MAX_VERSION', '10.0.12');
 // Used for use config values in 'cache'
 $PF_CONFIG = [];
 // used to know if computer inventory is in reallity a ESX task
@@ -78,11 +78,19 @@ define("PLUGIN_FUSIONINVENTORY_XML_DIR",
  * @param string $scriptname
  * @return boolean
  */
-function script_endswith($scriptname) {
-   $script_name = filter_input(INPUT_SERVER, "SCRIPT_NAME");
+/*function script_endswith($scriptname) {
+   $script_name = $_SERVER['SCRIPT_NAME'];
    return substr($script_name, -strlen($scriptname))===$scriptname;
 }
+*/
+function script_endswith($scriptname)
+{
+    //append plugin directory to avoid dumb errors...
+    $scriptname = 'fusioninventory/front/' . $scriptname;
+    $script_name = $_SERVER['SCRIPT_NAME'];
 
+    return substr($script_name, -strlen($scriptname)) === $scriptname;
+}
 
 /**
  * Init the hooks of FusionInventory
@@ -271,9 +279,9 @@ function plugin_init_fusioninventory() {
       $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = [];
       $PLUGIN_HOOKS['add_css']['fusioninventory'] = [];
       $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/fusioninventory.css";
-      if (strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), Plugin::getWebDir('fusioninventory', false)) != false
-          || strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "front/printer.form.php") != false
-          || strpos(filter_input(INPUT_SERVER, "SCRIPT_NAME"), "front/computer.form.php") != false) {
+      if (strpos($_SERVER['SCRIPT_NAME'], Plugin::getWebDir('fusioninventory', false)) != false
+          || strpos($_SERVER['SCRIPT_NAME'], "front/printer.form.php") != false
+          || strpos($_SERVER['SCRIPT_NAME'], "front/computer.form.php") != false) {
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/views.css";
          $PLUGIN_HOOKS['add_css']['fusioninventory'][]="css/deploy.css";
 
@@ -432,7 +440,7 @@ function plugin_init_fusioninventory() {
          $PLUGIN_HOOKS['webservices']['fusioninventory'] = 'plugin_fusioninventory_registerMethods';
 
          // Hack for NetworkEquipment display ports
-         if (strstr(filter_input(INPUT_SERVER, "PHP_SELF"), '/ajax/common.tabs.php')) {
+         if (strstr($_SERVER['SCRIPT_NAME'], '/ajax/common.tabs.php')) {
             if (strstr(filter_input(INPUT_GET, "_target"), '/front/networkequipment.form.php')
                     && filter_input(INPUT_GET, "_itemtype") == 'NetworkEquipment') {
 
@@ -444,8 +452,8 @@ function plugin_init_fusioninventory() {
             }
          }
          // Load nvd3 for printerpage counter graph
-         if (strstr(filter_input(INPUT_SERVER, "PHP_SELF"), '/front/printer.form.php')
-                 || strstr(filter_input(INPUT_SERVER, "PHP_SELF"), 'fusioninventory/front/menu.php')) {
+         if (strstr($_SERVER['SCRIPT_NAME'], '/front/printer.form.php')
+                 || strstr($_SERVER['SCRIPT_NAME'], 'fusioninventory/front/menu.php')) {
 
             // Add graph javascript
             $PLUGIN_HOOKS['add_javascript']['fusioninventory'] = array_merge(

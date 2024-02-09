@@ -567,7 +567,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
                      WHERE `itemtype`='PluginFusioninventoryUnmanaged'
                            AND `glpi_plugin_fusioninventory_unmanageds`.`id` IS NULL;";
       $unmanaged_infos = [];
-      $result=$DB->query($query);
+      $result=$DB->doQuery($query);
       if ($result) {
          while ($data=$DB->fetchArray($result)) {
             $unmanaged_infos["name"] = '';
@@ -704,7 +704,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
             AND `items_id`='".$hub_id."'
             AND `networkports_id_1` is null
          LIMIT 1;";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       $freeport_id = 0;
       if ($DB->numrows($result) == 1) {
          $freeport = $DB->fetchAssoc($result);
@@ -902,7 +902,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
             $query = "SELECT *
                       FROM `glpi_plugin_fusioninventory_printers`
                       WHERE `printers_id`='".$printer_id."' ";
-            $result = $DB->query($query);
+            $result = $DB->doQuery($query);
             $data = [];
             if ($DB->numrows($result) > 0) {
                $data = $DB->fetchAssoc($result);
@@ -951,7 +951,7 @@ class PluginFusioninventoryUnmanaged extends CommonDBTM {
             $query = "SELECT *
                       FROM `glpi_plugin_fusioninventory_networkequipments`
                       WHERE `networkequipments_id`='".$NetworkEquipment_id."' ";
-            $result = $DB->query($query);
+            $result = $DB->doQuery($query);
             $data = [];
             if ($DB->numrows($result) > 0) {
                $data = $DB->fetchAssoc($result);

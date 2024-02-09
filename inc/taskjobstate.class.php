@@ -442,7 +442,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
                 WHERE run.`id` = $id
                   AND log.`date` <= '$last_date'
                ORDER BY log.`id` DESC";
-      $res = $DB->query($query);
+      $res = $DB->doQuery($query);
       $logs = [];
       while ($result = $res->fetch_row()) {
          $run_id = $result[$fields['run.id']];
@@ -654,7 +654,7 @@ class PluginFusioninventoryTaskjobstate extends CommonDBTM {
               FROM `glpi_plugin_fusioninventory_taskjoblogs`
               WHERE  `date` < date_add(now(), interval -".$retentiontime." day)
               GROUP BY `plugin_fusioninventory_taskjobstates_id`";
-      $result=$DB->query($sql);
+      $result=$DB->doQuery($sql);
       if ($result) {
          $delete = $DB->buildDelete(
             'glpi_plugin_fusioninventory_taskjoblogs', [

@@ -59,7 +59,7 @@ class PrinterUpdateTest extends TestCase {
       $_SESSION["glpiID"] = 0;
 
       // delete locks
-      $DB->query('DELETE FROM glpi_plugin_fusioninventory_locks');
+      $DB->doQuery('DELETE FROM glpi_plugin_fusioninventory_locks');
    }
 
    public static function tearDownAfterClass(): void {
@@ -429,7 +429,7 @@ class PrinterUpdateTest extends TestCase {
       $this->assertArrayHasKey('id', $printer->fields);
 
       // delete locks
-      $DB->query('DELETE FROM glpi_plugin_fusioninventory_locks');
+      $DB->doQuery('DELETE FROM glpi_plugin_fusioninventory_locks');
 
       $pfCNetworkDiscovery->importDevice($printer);
 

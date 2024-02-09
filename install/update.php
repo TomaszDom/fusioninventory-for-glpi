@@ -637,7 +637,7 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
       fclose($DBf_handle);
       foreach (explode(";\n", "$sql_query") as $sql_line) {
          if (!empty($sql_line)) {
-            $DB->query($sql_line);/* or die($DB->error())*/
+            $DB->doQuery($sql_line);/* or die($DB->error())*/
          }
       }
    }
@@ -1060,9 +1060,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
             LEFT JOIN glpi_plugin_fusioninventory_timeslots
                ON glpi_plugin_fusioninventory_timeslotentries.plugin_fusioninventory_timeslots_id = glpi_plugin_fusioninventory_timeslots.id
             WHERE glpi_plugin_fusioninventory_timeslots.id IS NULL";
-   $result = $DB->query($query);
+   $result = $DB->doQuery($query);
    while ($data = $DB->fetchArray($result)) {
-      $DB->query('DELETE FROM glpi_plugin_fusioninventory_timeslotentries WHERE id='.$data['id']);
+      $DB->doQuery('DELETE FROM glpi_plugin_fusioninventory_timeslotentries WHERE id='.$data['id']);
    }
 
    // Clean entities
@@ -1071,9 +1071,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
             LEFT JOIN glpi_entities
                ON glpi_plugin_fusioninventory_entities.entities_id = glpi_entities.id
             WHERE glpi_entities.id IS NULL";
-   $result = $DB->query($query);
+   $result = $DB->doQuery($query);
    while ($data = $DB->fetchArray($result)) {
-      $DB->query('DELETE FROM glpi_plugin_fusioninventory_entities WHERE id='.$data['id']);
+      $DB->doQuery('DELETE FROM glpi_plugin_fusioninventory_entities WHERE id='.$data['id']);
    }
 
    // Clean packages
@@ -1089,9 +1089,9 @@ function pluginFusioninventoryUpdate($current_version, $migrationname = 'Migrati
                LEFT JOIN glpi_plugin_fusioninventory_deploypackages
                   ON ".$table.".plugin_fusioninventory_deploypackages_id = glpi_plugin_fusioninventory_deploypackages.id
                WHERE glpi_plugin_fusioninventory_deploypackages.id IS NULL";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       while ($data = $DB->fetchArray($result)) {
-         $DB->query('DELETE FROM '.$table.' WHERE id='.$data['id']);
+         $DB->doQuery('DELETE FROM '.$table.' WHERE id='.$data['id']);
       }
    }
 
@@ -1845,7 +1845,7 @@ function do_locks_migration($migration) {
       ]
    ]);
    foreach ($iterator as $data) {
-      $DB->query("DELETE FROM glpi_plugin_fusioninventory_locks ".
+      $DB->doQuery("DELETE FROM glpi_plugin_fusioninventory_locks ".
       "WHERE `tablename`='".$data['tablename']."' AND `items_id`='".$data['items_id']."' ".
       "ORDER BY ID desc LIMIT ".($data['cpt'] - 1));
    }
@@ -2091,7 +2091,7 @@ function do_profile_migration($migration) {
          GROUP BY `type`,`plugins_id`,`profiles_id`
          HAVING cnt >1
          ORDER BY cnt";
-      $result=$DB->query($query);
+      $result=$DB->doQuery($query);
       while ($data=$DB->fetchArray($result)) {
          //DB::delete() not yet supports limit nor order
          $queryd = "DELETE FROM `glpi_plugin_fusioninventory_profiles`
@@ -2100,7 +2100,7 @@ function do_profile_migration($migration) {
                   AND `profiles_id`='".$data['profiles_id']."'
                ORDER BY `id` DESC
                LIMIT ".($data['cnt'] - 1)." ";
-         $DB->query($queryd);
+         $DB->doQuery($queryd);
       }
 
       $a_table = [];
@@ -2759,7 +2759,7 @@ function do_rulematchedlog_migration($migration) {
                   `id` int unsigned NOT NULL AUTO_INCREMENT,
                    PRIMARY KEY (`id`)
                ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1";
-      $DB->query($query);
+      $DB->doQuery($query);
    }
    $migration->changeField($newTable,
                               "id",
@@ -2847,11 +2847,11 @@ function do_computercomputer_migration($migration) {
          }
       }
       $sql = "DROP TABLE `glpi_plugin_fusinvinventory_computers`";
-      $DB->query($sql);
+      $DB->doQuery($sql);
    }
    if ($DB->tableExists("glpi_plugin_fusinvinventory_tmp_agents")) {
       $sql = "DROP TABLE `glpi_plugin_fusinvinventory_tmp_agents`";
-      $DB->query($sql);
+      $DB->doQuery($sql);
    }
    $a_table = [];
    $a_table['name'] = 'glpi_plugin_fusioninventory_inventorycomputercomputers';
@@ -2977,7 +2977,7 @@ function do_biosascomponentmigration() {
                         bios_date IS NOT NULL AND bios_date != ''
                         OR bios_version IS NOT NULL AND bios_version != ''
                         OR bios_manufacturers_id != 0";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
 
       $deviceBios = new DeviceFirmware();
       $item_DeviceBios  = new Item_DeviceFirmware();
@@ -3120,7 +3120,7 @@ function do_configlogfield_migration($migration) {
                   `id` int unsigned NOT NULL AUTO_INCREMENT,
                    PRIMARY KEY (`id`)
                ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1";
-      $DB->query($query);
+      $DB->doQuery($query);
    }
    $migration->changeField($newTable,
                            "ID",
@@ -3184,7 +3184,7 @@ function do_networkport_migration($migration) {
                            $newTable);
 
    if (!$DB->tableExists($newTable)) {
-      $DB->query('CREATE TABLE `'.$newTable.'` (
+      $DB->doQuery('CREATE TABLE `'.$newTable.'` (
                         `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1');
@@ -3270,7 +3270,7 @@ function do_networkport_migration($migration) {
                      `id` int unsigned NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1";
-      $DB->query($query);
+      $DB->doQuery($query);
    }
    $migration->changeField($newTable,
                            "id",
@@ -3317,7 +3317,7 @@ function do_networkport_migration($migration) {
    $migration->renameTable("glpi_plugin_tracker_networking_ports",
                            $newTable);
    if (!$DB->tableExists($newTable)) {
-      $DB->query('CREATE TABLE `'.$newTable.'` (
+      $DB->doQuery('CREATE TABLE `'.$newTable.'` (
                         `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1');
@@ -3561,7 +3561,7 @@ function do_networkport_migration($migration) {
                      `id` int unsigned NOT NULL AUTO_INCREMENT,
                       PRIMARY KEY (`id`)
                   ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1";
-      $DB->query($query);
+      $DB->doQuery($query);
    }
    $migration->changeField($newTable,
                            "id",
@@ -3730,7 +3730,7 @@ function do_networkport_migration($migration) {
                           LEFT JOIN `glpi_networkequipments`
                               ON `glpi_networkequipments`.`id` = `glpi_networkports`.`items_id`
                     WHERE `glpi_networkequipments`.`id` IS NULL";
-   $result=$DB->query($query_select);
+   $result=$DB->doQuery($query_select);
    while ($data=$DB->fetchArray($result)) {
       $DB->delete(
          'glpi_plugin_fusioninventory_networkports', [
@@ -3838,7 +3838,7 @@ function do_printer_migration($migration) {
    $migration->renameTable("glpi_plugin_tracker_printers",
                            $newTable);
    if (!$DB->tableExists($newTable)) {
-      $DB->query('CREATE TABLE `'.$newTable.'` (
+      $DB->doQuery('CREATE TABLE `'.$newTable.'` (
                         `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1');
@@ -3938,7 +3938,7 @@ function do_printer_migration($migration) {
    $migration->renameTable("glpi_plugin_tracker_printers_history",
                            $newTable);
    if (!$DB->tableExists($newTable)) {
-      $DB->query('CREATE TABLE `'.$newTable.'` (
+      $DB->doQuery('CREATE TABLE `'.$newTable.'` (
                         `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1');
@@ -4073,7 +4073,7 @@ function do_printer_migration($migration) {
    $migration->renameTable("glpi_plugin_tracker_printers_cartridges",
                            $newTable);
    if (!$DB->tableExists($newTable)) {
-      $DB->query('CREATE TABLE `'.$newTable.'` (
+      $DB->doQuery('CREATE TABLE `'.$newTable.'` (
                         `id` bigint unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1');
@@ -4399,7 +4399,7 @@ function do_networkequipment_migration($migration) {
    $migration->renameTable("glpi_plugin_tracker_networking",
                            $newTable);
    if (!$DB->tableExists($newTable)) {
-      $DB->query('CREATE TABLE `'.$newTable.'` (
+      $DB->doQuery('CREATE TABLE `'.$newTable.'` (
                         `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1');
@@ -4522,7 +4522,7 @@ function do_networkequipment_migration($migration) {
       $migration->renameTable("glpi_plugin_tracker_networking_ifaddr",
                               $newTable);
       if (!$DB->tableExists($newTable)) {
-         $DB->query('CREATE TABLE `'.$newTable.'` (
+         $DB->doQuery('CREATE TABLE `'.$newTable.'` (
                         `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1');
@@ -4773,7 +4773,7 @@ function do_configsecurity_migration($migration) {
    $migration->renameTable("glpi_plugin_tracker_snmp_connection",
                            $newTable);
    if (!$DB->tableExists($newTable)) {
-      $DB->query('CREATE TABLE `'.$newTable.'` (
+      $DB->doQuery('CREATE TABLE `'.$newTable.'` (
                         `id` int unsigned NOT NULL AUTO_INCREMENT,
                         PRIMARY KEY (`id`)
                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1');
@@ -4903,7 +4903,7 @@ function do_statediscovery_migration($migration) {
    $migration->renameTable("glpi_plugin_fusinvsnmp_statediscoveries",
                            $newTable);
    if (!$DB->tableExists($newTable)) {
-      $DB->query("CREATE TABLE `".$newTable."` (
+      $DB->doQuery("CREATE TABLE `".$newTable."` (
                      `id` int unsigned NOT NULL AUTO_INCREMENT,
                      PRIMARY KEY (`id`)
                 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1");
@@ -5129,7 +5129,7 @@ function do_computerarch_migration($migration) {
          $sql_u = "UPDATE glpi_plugin_fusioninventory_computeroperatingsystems pf_os SET "
                      . " pf_os.operatingsystemarchitectures_id='" . $new_id . "',"
                      . " JOIN operatingsystemarchitectures os_arch WHERE os_arch.name='" . $DB->escape($arch['name']) . "'";
-         $DB->query($sql_u);
+         $DB->doQuery($sql_u);
       }
 
       $migration->dropTable('glpi_plugin_fusioninventory_computerarches');
@@ -5172,7 +5172,7 @@ function do_operatingsystemedition_migration($migration) {
                      . " ON pf_os.plugin_fusioninventory_computeroperatingsystemeditions_id = os_edition.id "
                      . " SET pf_os.plugin_fusioninventory_computeroperatingsystemeditions_id='$new_id'"
                      . " WHERE os_edition.name='" . $DB->escape($edition['name']) . "'";
-         $DB->query($sql_u);
+         $DB->doQuery($sql_u);
       }
       $migration->dropTable('glpi_plugin_fusioninventory_computeroperatingsystemeditions');
    }
@@ -5415,7 +5415,7 @@ function do_deployuserinteraction_migration($migration) {
          KEY `entities_id` (`entities_id`),
          KEY `is_recursive` (`is_recursive`)
       ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;";
-      $DB->query($query);
+      $DB->doQuery($query);
    }
 }
 
@@ -5535,7 +5535,7 @@ function do_deployfile_migration($migration) {
                     . " LEFT JOIN glpi_plugin_fusinvdeploy_packages as pkgs "
                     . "    ON orders.`plugin_fusinvdeploy_packages_id` = pkgs.`id`"
                     . " WHERE files.`shortsha512` != ''";
-            $result = $DB->query($sql);
+            $result = $DB->doQuery($sql);
             if ($DB->numrows($result) > 0) {
                $update = $DB->buildUpdate(
                   'glpi_plugin_fusinvdeploy_files', [
@@ -6274,7 +6274,7 @@ function do_credentialESX_migration($migration) {
     * Table glpi_plugin_fusioninventory_credentialips
     */
    // fix for a problem with a user, not sure same problem for other users, but for prevention
-   $DB->query("UPDATE glpi_plugin_fusioninventory_credentialips SET plugin_fusioninventory_credentials_id=0 WHERE plugin_fusioninventory_credentials_id=-1;");
+   $DB->doQuery("UPDATE glpi_plugin_fusioninventory_credentialips SET plugin_fusioninventory_credentials_id=0 WHERE plugin_fusioninventory_credentials_id=-1;");
 
    $a_table = [];
    $a_table['name'] = 'glpi_plugin_fusioninventory_credentialips';
@@ -6978,7 +6978,7 @@ function do_rule_migration($migration) {
       "sub_type" => "PluginFusioninventoryInventoryRuleImport"
       ]) == 0) {
 
-      $DB->query("UPDATE glpi_rules "
+      $DB->doQuery("UPDATE glpi_rules "
             . "SET ranking = ranking + 8 "
             . "WHERE `sub_type`='PluginFusioninventoryInventoryRuleImport'");
 
@@ -7778,7 +7778,7 @@ function changeDisplayPreference($olditemtype, $newitemtype) {
       WHERE (`itemtype` = '".$newitemtype."'
       OR `itemtype` = '".$olditemtype."')
       group by `users_id`, `num`";
-   $result = $DB->query($query);
+   $result = $DB->doQuery($query);
    while ($data = $DB->fetchArray($result)) {
       if ($data['cnt'] > 1) {
          $ids = explode(' ', $data['id']);
@@ -9799,7 +9799,7 @@ function update213to220_ConvertField($migration) {
                   AND ((`old_value` NOT LIKE '%:%')
                         OR (`old_value` IS NULL))";
       $stmt = null;
-      if ($result=$DB->query($query)) {
+      if ($result=$DB->doQuery($query)) {
          $nb = $DB->numrows($result);
          $i = 0;
          $migration->displayMessage("$i / $nb");
@@ -9879,7 +9879,7 @@ function update213to220_ConvertField($migration) {
                         OR (`new_value` IS NULL))";
 
       $stmt = null;
-      if ($result=$DB->query($query)) {
+      if ($result=$DB->doQuery($query)) {
          $nb = $DB->numrows($result);
          $i = 0;
          $migration->displayMessage("$i / $nb");
@@ -9984,7 +9984,7 @@ function migrateTablesFusionInventory($migration, $a_table) {
                      ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1";
       }
 
-      $DB->query($query);
+      $DB->doQuery($query);
    }
 
    foreach ($a_table['renamefields'] as $old=>$new) {
@@ -10079,7 +10079,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                FROM glpi_plugin_fusinvdeploy_checks
                WHERE plugin_fusinvdeploy_orders_id = $order_id
                ORDER BY ranking ASC";
-            $c_res = $DB->query($c_query);
+            $c_res = $DB->doQuery($c_query);
             $c_i = 0;
             while ($c_datas = $DB->fetchAssoc($c_res)) {
                foreach ($c_datas as $c_key => $c_value) {
@@ -10105,7 +10105,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                "p2p_retention_days as `p2p-retention-duration`, uncompress, sha512 ".
                "FROM glpi_plugin_fusinvdeploy_files ".
                "WHERE plugin_fusinvdeploy_orders_id = $order_id";
-            $f_res = $DB->query($f_query);
+            $f_res = $DB->doQuery($f_query);
             while ($f_datas = $DB->fetchAssoc($f_res)) {
 
                //jump to next entry if sha512 is empty
@@ -10149,7 +10149,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                FROM glpi_plugin_fusinvdeploy_actions
                WHERE plugin_fusinvdeploy_orders_id = $order_id
                ORDER BY ranking ASC";
-            $a_res = $DB->query($a_query);
+            $a_res = $DB->doQuery($a_query);
             $a_i = 0;
             while ($a_datas = $DB->fetchAssoc($a_res)) {
 
@@ -10166,7 +10166,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                $at_query = "SELECT *
                   FROM $a_table
                   WHERE id = ".$a_datas['items_id'];
-               $at_res = $DB->query($at_query);
+               $at_res = $DB->doQuery($at_query);
                while ($at_datas = $DB->fetchAssoc($at_res)) {
                   foreach ($at_datas as $at_key => $at_value) {
                      //we don't store the id field of action itemtype table in json
@@ -10188,7 +10188,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                      $ret_cmd_query = "SELECT type, value
                         FROM glpi_plugin_fusinvdeploy_actions_commandstatus
                         WHERE plugin_fusinvdeploy_commands_id = ".$at_datas['id'];
-                     $ret_cmd_res = $DB->query($ret_cmd_query);
+                     $ret_cmd_res = $DB->doQuery($ret_cmd_query);
                      while ($res_cmd_datas = $DB->fetchAssoc($ret_cmd_res)) {
                         // Skip empty retchecks type:
                         // This surely means they have been drop at some point but entry has not been
@@ -10256,7 +10256,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
             "GROUP BY fp.`sha512` ".
             "ORDER BY fp.`id`";
 
-         $fp_res = $DB->query($fp_query);
+         $fp_res = $DB->doQuery($fp_query);
          if ($DB->numrows($fp_res) > 0) {
             //print("writing file : " . GLPI_PLUGIN_DOC_DIR."/fusioninventory/files/manifests/{$sha}" . "\n");
             $fhandle = fopen(
@@ -10275,7 +10275,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
 
    //migrate fusinvdeploy_files to fusioninventory_deployfiles
    if ($DB->tableExists("glpi_plugin_fusinvdeploy_files")) {
-      $DB->query("TRUNCATE TABLE `glpi_plugin_fusioninventory_deployfiles`");
+      $DB->doQuery("TRUNCATE TABLE `glpi_plugin_fusioninventory_deployfiles`");
       if ($DB->fieldExists("glpi_plugin_fusinvdeploy_files", "filesize")) {
          $f_query = implode(
             " \n",
@@ -10290,7 +10290,7 @@ function migrateTablesFromFusinvDeploy ($migration) {
                "  files.`shortsha512` != \"\""
                ]
          );
-         $f_res = $DB->query($f_query);
+         $f_res = $DB->doQuery($f_query);
          while ($f_datas = $DB->fetchAssoc($f_res)) {
             $entry = [
                "id"        => $f_datas["id"],
@@ -10399,6 +10399,6 @@ function migrateTablesFromFusinvDeploy ($migration) {
       'glpi_plugin_fusinvdeploy_tasks'
    ];
    foreach ($old_deploy_views as $view) {
-      $DB->query("DROP VIEW IF EXISTS $view");
+      $DB->doQuery("DROP VIEW IF EXISTS $view");
    }
 }

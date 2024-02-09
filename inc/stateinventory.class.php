@@ -101,7 +101,7 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
          WHERE `method` = 'networkinventory'
          GROUP BY `uniqid`
          ORDER BY `uniqid` DESC ";
-      $resultcount = $DB->query($querycount);
+      $resultcount = $DB->doQuery($querycount);
       $number = $DB->numrows($resultcount);
 
       // Display the pager
@@ -131,7 +131,7 @@ class PluginFusioninventoryStateInventory extends CommonDBTM {
          GROUP BY `uniqid`
          ORDER BY `uniqid` DESC
          LIMIT ".intval($start).", " . intval($_SESSION['glpilist_limit']);
-      $result=$DB->query($sql);
+      $result=$DB->doQuery($sql);
       while ($data=$DB->fetchArray($result)) {
          echo "<tr class='tab_bg_1'>";
          echo "<td>".$data['uniqid']."</td>";

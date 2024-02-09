@@ -59,7 +59,7 @@ if ((isset($_POST['update'])) && (isset($_POST['id']))) {
    $query = "SELECT *
              FROM `glpi_plugin_fusioninventory_printers`
              WHERE `printers_id`='".$_POST['printers_id']."' ";
-   $result = $DB->query($query);
+   $result = $DB->doQuery($query);
 
    if ($DB->numrows($result) == "0") {
       $DB->insert(
@@ -70,7 +70,7 @@ if ((isset($_POST['update'])) && (isset($_POST['id']))) {
       $query = "SELECT *
                 FROM `glpi_plugin_fusioninventory_printers`
                 WHERE `printers_id`='".$_POST['printers_id']."' ";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
    }
 
    $data = $DB->fetchAssoc($result);

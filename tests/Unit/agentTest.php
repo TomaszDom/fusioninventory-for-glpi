@@ -159,7 +159,7 @@ class agentTest extends TestCase {
 
       $pfAgent = new PluginFusioninventoryAgent();
       $query = "UPDATE glpi_plugin_fusioninventory_agents SET `last_contact`='2015-01-01 00:00:01'";
-      $DB->query($query);
+      $DB->doQuery($query);
       $arrayinventory = [
           'DEVICEID' => 'port004.bureau.siprossii.com-2013-01-01-16-27-27',
       ];

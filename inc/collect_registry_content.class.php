@@ -106,7 +106,7 @@ class PluginFusioninventoryCollect_Registry_Content extends PluginFusioninventor
                 WHERE `computers_id` = '".$computers_id."'
                   AND `plugin_fusioninventory_collects_registries_id` =
                   '".$collects_registries_id."'";
-      $result = $DB->query($query);
+      $result = $DB->doQuery($query);
       while ($data = $DB->fetchAssoc($result)) {
          $idtmp = $data['id'];
          unset($data['id']);
